@@ -1,3 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<agm-map>
+<agm-map [latitude]="37.33346293" [longitude]="-122.06310662">
+  <agm-polyline *ngFor="let trip of trips">
+      {{trip.id}}
+     <agm-polyline-point *ngFor="let point of trip.points" [latitude]="toFloat(point.lat)" [longitude]="toFloat(point.lng)">
+     </agm-polyline-point>
+   </agm-polyline>
 </agm-map>

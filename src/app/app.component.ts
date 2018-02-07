@@ -11,6 +11,10 @@ export class AppComponent {
   trips = [];
 
   constructor(private tripsService: TripsService){ 
-    this.tripsService.update().subscribe(data => console.log(data));
+    this.tripsService.update().subscribe(data => this.trips = data);
   };
+
+  toFloat(number) {
+    return parseFloat(number);
+  }
 }
