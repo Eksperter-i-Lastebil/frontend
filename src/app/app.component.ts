@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TripsService } from './trips.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  trips = [];
+
+  constructor(private tripsService: TripsService){ 
+    this.tripsService.update().subscribe(data => console.log(data));
+  };
 }
