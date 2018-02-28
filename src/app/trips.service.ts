@@ -13,7 +13,7 @@ export class TripsService {
   }
 
   update() {
-    return this.http.get("http://10.24.33.107:5000/api");
+    return this.http.get("http://10.24.27.207:5000/api");
   }
 
 }

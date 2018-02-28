@@ -24,14 +24,20 @@ export class AppComponent implements OnInit{
 
   constructor(private tripsService: TripsService,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone) {
-    //this.tripsService.update().subscribe(data => this.trips.push(data));
+    private ngZone: NgZone)
+    {
+    this.tripsService.update().subscribe(data => {
+      this.trips = data;
+      //console.log(data);
+    });
+
+    setInterval(()=>this.getLoop(this), 5000);
   };
 
 	ngOnInit() {
     //set google maps defaults
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
+    //this.latitude = 37.33039592;
+    //this.longitude = -122.0293017;
 
     //create search FormControl
     this.searchControl = new FormControl();
@@ -57,10 +63,18 @@ export class AppComponent implements OnInit{
           //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          console.log(this.latitude + " " + this.longitude);
+          //console.log(this.latitude + " " + this.longitude);
         });
       });
     });
+  }
+
+  public getLoop()
+  {
+    this.tripsService.update().subscribe(data => {
+      this.trips = data;
+      //console.log(data);
+      });
   }
 
 	private setCurrentPosition() {
@@ -70,6 +84,43 @@ export class AppComponent implements OnInit{
         this.longitude = position.coords.longitude;
       });
     }
+  }
+
+  setColor(trip)
+  {
+    if(trip.type == ", Stroying")
+    {
+      return 'tomato';
+    }
+    else if(trip.type == ", Broyting")
+    {
+      return 'Orange';
+    }
+    else if(trip.type == ", Fresing")
+    {
+      return 'DodgerBlue';
+    }
+    else if(trip.type == ", Salting")
+    {
+      return 'MediumSeaGreen';
+    }
+    else if(trip.type == ", Skraping")
+    {
+      return 'SlateBlue';
+    }
+  }
+
+  setOpacity(trip)
+  {
+    var unix = Math.round(+new Date()/1000);
+    var diff = unix - trip.time;
+
+    //onsole.log(diff);
+    //factor = trip.time/diff;
+    var factor = diff/60;
+    console.log(factor);
+    return 1 - factor;
+    //console.log(trip.timestamp);
   }
 
   toFloat(number) {
